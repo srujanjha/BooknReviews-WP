@@ -1,0 +1,61 @@
+<Page
+    x:Class="AppStudio.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AppStudio.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+ 
+  <Grid Background="{StaticResource AppBackground}">
+    <Grid.ChildrenTransitions>
+      <TransitionCollection>
+        <EntranceThemeTransition/>
+      </TransitionCollection>
+    </Grid.ChildrenTransitions>
+
+    <Hub x:Name="Container"  DataContext="{Binding}" Header="{Binding NavigationHelper}" HeaderTemplate="{StaticResource PageHeader}" SectionHeaderClick="OnSectionHeaderClick" Style="{StaticResource AppHubStyle}" SectionsInViewChanged="OnSectionsInViewChanged">
+      <HubSection x:Name="NewYorkTimesSection" Header="New York Times" DataContext="{Binding MainViewModel.NewYorkTimesModel}" ContentTemplate="{StaticResource NewYorkTimesList}" IsHeaderInteractive="{Binding HasMoreItems}" Style="{StaticResource AppHubSectionStyle}" />
+      <HubSection x:Name="TheGuardianSection" Header="The Guardian" DataContext="{Binding MainViewModel.TheGuardianModel}" ContentTemplate="{StaticResource TheGuardianList}" IsHeaderInteractive="{Binding HasMoreItems}" Style="{StaticResource AppHubSectionStyle}" />
+      <HubSection x:Name="NYRBSection" Header="NYRB" DataContext="{Binding MainViewModel.NYRBModel}" ContentTemplate="{StaticResource NYRBList}" IsHeaderInteractive="{Binding HasMoreItems}" Style="{StaticResource AppHubSectionStyle}" />
+      <HubSection x:Name="RTBookReviewsSection" Header="RTBook Reviews" DataContext="{Binding MainViewModel.RTBookReviewsModel}" ContentTemplate="{StaticResource RTBookReviewsList}" IsHeaderInteractive="{Binding HasMoreItems}" Style="{StaticResource AppHubSectionStyle}" />
+      <HubSection x:Name="TheIndependentSection" Header="The Independent" DataContext="{Binding MainViewModel.TheIndependentModel}" ContentTemplate="{StaticResource TheIndependentList}" IsHeaderInteractive="{Binding HasMoreItems}" Style="{StaticResource AppHubSectionStyle}" />
+    </Hub>
+
+    <VisualStateManager.VisualStateGroups>
+      <VisualStateGroup>
+        <VisualState x:Name="SnappedView">
+          <Storyboard>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NewYorkTimesSection" Storyboard.TargetProperty="ContentTemplate">
+              <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NewYorkTimesListSnapped}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TheGuardianSection" Storyboard.TargetProperty="ContentTemplate">
+              <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TheGuardianListSnapped}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NYRBSection" Storyboard.TargetProperty="ContentTemplate">
+              <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NYRBListSnapped}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RTBookReviewsSection" Storyboard.TargetProperty="ContentTemplate">
+              <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource RTBookReviewsListSnapped}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TheIndependentSection" Storyboard.TargetProperty="ContentTemplate">
+              <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TheIndependentListSnapped}"/>
+            </ObjectAnimationUsingKeyFrames>
+          </Storyboard>
+        </VisualState>
+        <VisualState x:Name="FullscreenView">
+        </VisualState>
+      </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+  </Grid>
+
+  <Page.BottomAppBar>
+    <CommandBar Background="{StaticResource AppBarBackground}">
+      <AppBarButton x:Uid="RefreshButton" DataContext="{Binding MainViewModel}" Command="{Binding RefreshCommand}">
+        <AppBarButton.Icon>
+          <BitmapIcon UriSource="ms-appx:///Assets/AppBar/Refresh.png"/>
+        </AppBarButton.Icon>
+      </AppBarButton>
+    </CommandBar>
+  </Page.BottomAppBar>
+</Page>
